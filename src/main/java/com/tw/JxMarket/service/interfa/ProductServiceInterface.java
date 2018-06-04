@@ -9,4 +9,9 @@ public interface ProductServiceInterface {
   List<Product> getProductList();
 
   Product updateProductById(long id, Product employee);
+
+  Product getProductById(Long id);
+
+  List<Product> getProductsByNameAndDescription(String name, String description);
+
 }

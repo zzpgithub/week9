@@ -32,9 +32,21 @@ public class ProductController {
     return productService.getProductList();
   }
 
+  @GetMapping(value = "{id}")
+  @ResponseStatus(HttpStatus.OK)
+  Product getProductById(@PathVariable long id) {
+    return productService.getProductById(id);
+  }
+
   @PutMapping(value = "{id}")
   @ResponseStatus(HttpStatus.OK)
   Product putProduct(@PathVariable long id, @RequestBody Product product ) {
     return productService.updateProductById(id,product);
+  }
+
+  @GetMapping("name/{name}/description/{description}")
+  @ResponseStatus(HttpStatus.OK)
+  List<Product> getProductsByNameAndDesc(@PathVariable String name, @PathVariable String description) {
+    return productService.getProductsByNameAndDescription(name, description);
   }
 }

@@ -31,4 +31,14 @@ public class ProductService implements ProductServiceInterface{
     updateProduct.setPrice(product.getPrice());
     return productRepository.save(updateProduct);
   }
+
+  @Override
+  public Product getProductById(Long id){
+    return productRepository.findById(id);
+  }
+
+  @Override
+  public List<Product> getProductsByNameAndDescription(String name, String description){
+    return productRepository.findByNameOrDescriptionContaining(name,description);
+  }
 }
