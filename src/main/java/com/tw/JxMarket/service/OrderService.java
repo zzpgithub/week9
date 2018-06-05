@@ -5,9 +5,13 @@ import com.tw.JxMarket.entity.Order;
 import com.tw.JxMarket.entity.OrderDetail;
 import com.tw.JxMarket.entity.Product;
 import com.tw.JxMarket.repository.InventoryRepository;
+import com.tw.JxMarket.repository.OrderDetailRepository;
 import com.tw.JxMarket.repository.OrderRepository;
 import com.tw.JxMarket.repository.ProductRepository;
+import com.tw.JxMarket.service.interfa.InventoryServiceInterface;
+import com.tw.JxMarket.service.interfa.OrderDetailServiceInterface;
 import com.tw.JxMarket.service.interfa.OrderServiceInterface;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +24,9 @@ public class OrderService implements OrderServiceInterface{
   @Autowired
   ProductRepository productRepository;
   @Autowired
-  InventoryRepository inventoryRepository;
-
+  InventoryServiceInterface inventoryService;
+  @Autowired
+  OrderDetailServiceInterface orderDetailService;
 
   @Override
   public String addOrder(List<OrderDetail> orderDetails){
@@ -29,6 +34,8 @@ public class OrderService implements OrderServiceInterface{
     double totalPrice = createOrderDetailAndCalculateTotalPrice(orderDetails);
     order.setTotalPrice(totalPrice);
     order.setStatus("UNPAID");
+    Order newOrder = orderRepository.saveAndFlush(order);
+    orderDetailService.createOrderDetail(orderDetails,newOrder.getId());
     return "Add Order Success.";
   }
 
@@ -36,12 +43,12 @@ public class OrderService implements OrderServiceInterface{
     double totalPrice = 0.0;
     for (OrderDetail orderDetail : orderDetails) {
       Product product = productRepository.findOne(orderDetail.getProductId());
-      Inventory inventory = inventoryRepository.findByProductId(orderDetail.getProductId());
+      Inventory inventory = inventoryService.getInventoryByProductId(orderDetail.getProductId());
       if(inventory.getCount() - inventory.getLockCount() < orderDetail.getPurchaseCount()){
         System.out.println("product not enough"); ////商品数量不足
       }else{
         inventory.setCount(inventory.getCount()- orderDetail.getPurchaseCount());
-        inventoryRepository.saveAndFlush(inventory);
+        inventoryService.saveInventory(inventory);
         totalPrice += orderDetail.getPurchaseCount() * product.getPrice();
       }
     }
@@ -51,5 +58,25 @@ public class OrderService implements OrderServiceInterface{
   @Override
   public Order getOrderByOrderId(long id) {
     return orderRepository.findById(id);
+  }
+
+  @Override
+  public String payOrder(Long id) {
+    Order order = orderRepository.findById(id);
+    order.setStatus("PAID");
+    order.setPaidTime(new Date());
+    orderRepository.save(order);
+    return "Pay Order";
+  }
+
+  @Override
+  public String withdrawOrder(Long id) {
+    Order order = orderRepository.findById(id);
+    order.setStatus("WITHDRAW");
+    order.setWithdrawTime(new Date());
+    orderRepository.save(order);
+    inventoryService.updateInventories(order.getPurchaseDetailList());
+
+    return "Withdraw Order";
   }
 }

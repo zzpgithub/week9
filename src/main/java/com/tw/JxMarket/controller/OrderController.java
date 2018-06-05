@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -30,5 +31,17 @@ public class OrderController {
   @ResponseStatus(HttpStatus.OK)
   Order getOrderById(@PathVariable Long id) {
     return orderService.getOrderByOrderId(id);
+  }
+
+  @PutMapping(value = "{id}/paid")
+  @ResponseStatus(HttpStatus.OK)
+  String payOrder(@PathVariable Long id) {
+    return orderService.payOrder(id);
+  }
+
+  @PutMapping(value = "{id}/withdraw")
+  @ResponseStatus(HttpStatus.OK)
+  String withdrawOrder(@PathVariable Long id) {
+    return orderService.withdrawOrder(id);
   }
 }

@@ -10,4 +10,7 @@ public interface OrderServiceInterface {
 
   Order getOrderByOrderId(long id);
 
+  String payOrder(Long id);
+
+  String withdrawOrder(Long id);
 }
