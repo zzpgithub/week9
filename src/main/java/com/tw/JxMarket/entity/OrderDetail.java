@@ -3,6 +3,10 @@ package com.tw.JxMarket.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 public class OrderDetail {
@@ -13,6 +17,13 @@ public class OrderDetail {
   private long productId;
 
   private int purchaseCount;
+
+  private Long orderId;
+
+//  @OneToOne
+//  @JoinColumn(name = "productId",insertable = false,updatable = false)
+//  @Fetch(FetchMode.JOIN)
+//  private Product product;
 
   public Long getId() {
     return id;
@@ -36,5 +47,13 @@ public class OrderDetail {
 
   public void setPurchaseCount(int purchaseCount) {
     this.purchaseCount = purchaseCount;
+  }
+
+  public Long getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(Long orderId) {
+    this.orderId = orderId;
   }
 }

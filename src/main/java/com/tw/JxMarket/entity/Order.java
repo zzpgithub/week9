@@ -1,10 +1,13 @@
 package com.tw.JxMarket.entity;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +26,10 @@ public class Order {
   private String status;
 
   public Order(){}
+
+  @OneToMany
+  @JoinColumn(name = "orderId")
+  private List<OrderDetail> purchaseDetailList;
 
   public Long getId() {
     return id;
@@ -62,5 +69,13 @@ public class Order {
 
   public void setStatus(String status) {
     this.status = status;
+  }
+
+  public List<OrderDetail> getPurchaseDetailList() {
+    return purchaseDetailList;
+  }
+
+  public void setPurchaseDetailList(List<OrderDetail> purchaseDetailList) {
+    this.purchaseDetailList = purchaseDetailList;
   }
 }
