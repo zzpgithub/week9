@@ -1,9 +1,11 @@
 package com.tw.JxMarket.service;
 
+import com.tw.JxMarket.entity.Delivery;
 import com.tw.JxMarket.entity.Inventory;
 import com.tw.JxMarket.entity.Order;
 import com.tw.JxMarket.entity.OrderDetail;
 import com.tw.JxMarket.entity.Product;
+import com.tw.JxMarket.repository.DeliveryRepository;
 import com.tw.JxMarket.repository.InventoryRepository;
 import com.tw.JxMarket.repository.OrderDetailRepository;
 import com.tw.JxMarket.repository.OrderRepository;
@@ -27,6 +29,8 @@ public class OrderService implements OrderServiceInterface{
   InventoryServiceInterface inventoryService;
   @Autowired
   OrderDetailServiceInterface orderDetailService;
+  @Autowired
+  private DeliveryRepository deliveryRepository;
 
   @Override
   public String addOrder(List<OrderDetail> orderDetails){
@@ -66,6 +70,10 @@ public class OrderService implements OrderServiceInterface{
     order.setStatus("PAID");
     order.setPaidTime(new Date());
     orderRepository.save(order);
+
+    //delivery
+    Delivery delivery = deliveryRepository.save(new Delivery("NEED_TO_DELIVERY",id));
+
     return "Pay Order";
   }
 

@@ -2,12 +2,15 @@ package com.tw.JxMarket.entity;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -30,6 +33,9 @@ public class Order {
   @OneToMany
   @JoinColumn(name = "orderId")
   private List<OrderDetail> purchaseDetailList;
+
+  @OneToOne(fetch = FetchType.EAGER, cascade =  CascadeType.REMOVE, mappedBy = "order")
+  private Delivery delivery;
 
   public Long getId() {
     return id;
@@ -77,5 +83,13 @@ public class Order {
 
   public void setPurchaseDetailList(List<OrderDetail> purchaseDetailList) {
     this.purchaseDetailList = purchaseDetailList;
+  }
+
+  public Delivery getDelivery() {
+    return delivery;
+  }
+
+  public void setDelivery(Delivery delivery) {
+    this.delivery = delivery;
   }
 }
