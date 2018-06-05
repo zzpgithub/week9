@@ -26,4 +26,9 @@ public class InventoryService implements InventoryServiceInterface{
     updateInventory.setCount(lockCount);
     return inventoryRepository.save(updateInventory);
   }
+
+  @Override
+  public Inventory getInventoryByProductId(Long productId){
+    return inventoryRepository.findByProductId(productId);
+  }
 }

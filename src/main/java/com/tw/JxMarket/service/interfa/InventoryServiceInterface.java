@@ -6,4 +6,6 @@ public interface InventoryServiceInterface {
   Inventory updateCount(Long productId, int count);
 
   Inventory updateLockCount(Long productId, int lockCount);
+
+  Inventory getInventoryByProductId(Long productId);
 }

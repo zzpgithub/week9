@@ -4,6 +4,7 @@ import com.tw.JxMarket.entity.Inventory;
 import com.tw.JxMarket.service.interfa.InventoryServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,5 +22,11 @@ public class InventoryController {
   @ResponseStatus(HttpStatus.OK)
   Inventory updateProductNumber(@PathVariable Long productId, @PathVariable int count) {
     return inventoryService.updateCount(productId, count);
+  }
+
+  @GetMapping(value = "{productId}")
+  @ResponseStatus(HttpStatus.OK)
+  Inventory getInventoryByProductId(@PathVariable Long productId) {
+    return inventoryService.getInventoryByProductId(productId);
   }
 }
