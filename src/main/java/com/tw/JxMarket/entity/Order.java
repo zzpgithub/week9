@@ -28,6 +28,8 @@ public class Order {
 
   private String status;
 
+  private long userId=1;
+
   public Order(){}
 
   @OneToMany
@@ -91,5 +93,13 @@ public class Order {
 
   public void setDelivery(Delivery delivery) {
     this.delivery = delivery;
+  }
+
+  public long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(long userId) {
+    this.userId = userId;
   }
 }

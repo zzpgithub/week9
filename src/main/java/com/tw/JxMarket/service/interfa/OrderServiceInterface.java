@@ -13,4 +13,6 @@ public interface OrderServiceInterface {
   String payOrder(Long id);
 
   String withdrawOrder(Long id);
+
+  List<Order> getOrdersByUserId(long userId);
 }

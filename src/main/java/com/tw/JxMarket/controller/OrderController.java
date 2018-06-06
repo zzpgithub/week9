@@ -44,4 +44,11 @@ public class OrderController {
   String withdrawOrder(@PathVariable Long id) {
     return orderService.withdrawOrder(id);
   }
+
+  @GetMapping(value = "users/{userId}")
+  @ResponseStatus(HttpStatus.OK)
+  List<Order> getOrderByUserId(@PathVariable long userId) {
+    return orderService.getOrdersByUserId(userId);
+  }
+
 }

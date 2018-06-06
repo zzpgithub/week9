@@ -92,4 +92,9 @@ public class OrderService implements OrderServiceInterface{
 
     return "Withdraw Order";
   }
+
+  @Override
+  public List<Order> getOrdersByUserId(long userId) {
+    return orderRepository.findByUserId(userId);
+  }
 }
