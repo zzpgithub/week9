@@ -14,6 +14,12 @@ public class DeliveryService implements DeliveryServiceInterface{
   DeliveryRepository deliveryRepository;
 
   @Override
+  public String createDelivery(Delivery delivery) {
+    deliveryRepository.saveAndFlush(delivery);
+    return "Create Delivery";
+  }
+
+  @Override
   public Delivery getDeliveryById(long id){
     return  deliveryRepository.findById(id);  ////bug
   }

@@ -10,6 +10,7 @@ import com.tw.JxMarket.repository.InventoryRepository;
 import com.tw.JxMarket.repository.OrderDetailRepository;
 import com.tw.JxMarket.repository.OrderRepository;
 import com.tw.JxMarket.repository.ProductRepository;
+import com.tw.JxMarket.service.interfa.DeliveryServiceInterface;
 import com.tw.JxMarket.service.interfa.InventoryServiceInterface;
 import com.tw.JxMarket.service.interfa.OrderDetailServiceInterface;
 import com.tw.JxMarket.service.interfa.OrderServiceInterface;
@@ -30,7 +31,7 @@ public class OrderService implements OrderServiceInterface{
   @Autowired
   OrderDetailServiceInterface orderDetailService;
   @Autowired
-  private DeliveryRepository deliveryRepository;
+  private DeliveryServiceInterface deliveryService;
 
   @Override
   public String addOrder(List<OrderDetail> orderDetails){
@@ -60,7 +61,7 @@ public class OrderService implements OrderServiceInterface{
   }
 
   @Override
-  public Order getOrderByOrderId(long id) {
+  public Order getOrderById(Long id) {
     return orderRepository.findById(id);
   }
 
@@ -72,7 +73,11 @@ public class OrderService implements OrderServiceInterface{
     orderRepository.save(order);
 
     //delivery
-    Delivery delivery = deliveryRepository.save(new Delivery("NEED_TO_DELIVERY",id));
+    Delivery delivery = new Delivery();
+    delivery.setOrderId(order.getId());
+    delivery.setDeliveryStatus("NEED_TO_DELIVERY");
+    deliveryService.createDelivery(delivery);
+   // Delivery delivery = deliveryRepository.save(new Delivery("NEED_TO_DELIVERY",order.getId()));
 
     return "Pay Order";
   }

@@ -29,8 +29,8 @@ public class OrderController {
 
   @GetMapping(value = "{id}")
   @ResponseStatus(HttpStatus.OK)
-  Order getOrderById(@PathVariable Long id) {
-    return orderService.getOrderByOrderId(id);
+  Order getOrderById(@PathVariable long id) {
+    return orderService.getOrderById(id);
   }
 
   @PutMapping(value = "{id}/paid")

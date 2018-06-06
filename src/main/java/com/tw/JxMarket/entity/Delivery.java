@@ -19,6 +19,9 @@ public class Delivery {
 
   private Long orderId;
 
+  public Delivery() {
+  }
+
   public Delivery(String deliveryStatus, Long orderId) {
     this.deliveryStatus = deliveryStatus;
     this.orderId = orderId;
@@ -66,13 +69,5 @@ public class Delivery {
 
   public void setOrderId(Long orderId) {
     this.orderId = orderId;
-  }
-
-  public Order getOrder() {
-    return order;
-  }
-
-  public void setOrder(Order order) {
-    this.order = order;
   }
 }

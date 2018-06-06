@@ -8,7 +8,7 @@ public interface OrderServiceInterface {
 
   String addOrder(List<OrderDetail> orderDetails);
 
-  Order getOrderByOrderId(long id);
+  Order getOrderById(Long id);
 
   String payOrder(Long id);
 
